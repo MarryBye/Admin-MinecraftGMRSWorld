@@ -7,8 +7,33 @@ class TypesController:
     
     @staticmethod
     def add_type(type_name: str):
-        pass
+        
+        query = (
+            '''
+            SELECT * FROM add_type(%s)
+            '''
+        )
+        args = [type_name]
+        
+        db_controller.execute_query(
+            query=query,
+            args=args
+        )
     
     @staticmethod
     def get_type(id) -> Type:
-        pass
+        
+        query = (
+            '''
+            SELECT * FROM get_type(%s)
+            '''
+        )
+        args = [id]
+        
+        callback_data = db_controller.execute_query(
+            query=query,
+            args=args,
+            fetch_results=1
+        )
+        
+        return Type(**callback_data)

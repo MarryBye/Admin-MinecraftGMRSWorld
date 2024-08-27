@@ -7,8 +7,33 @@ class DifficultiesController:
     
     @staticmethod
     def add_difficulty(difficulty_name: str):
-        pass
+        
+        query = (
+            '''
+            SELECT * FROM add_difficulty(%s)
+            '''
+        )
+        args = [difficulty_name]
+        
+        db_controller.execute_query(
+            query=query, 
+            args=args
+        )
     
     @staticmethod
     def get_difficulty(id) -> Difficulty:
-        pass
+        
+        query = (
+            '''
+            SELECT * FROM get_defficulty(%s)
+            '''
+        )
+        args = [id]
+        
+        callback_data = db_controller.execute_query(
+            query=query,
+            args=args,
+            fetch_results=1
+        )
+        
+        return Difficulty(**callback_data)

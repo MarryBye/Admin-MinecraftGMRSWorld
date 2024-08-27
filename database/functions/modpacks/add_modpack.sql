@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS add_modpack CASCADE;
 
 CREATE OR REPLACE FUNCTION add_modpack(
-    modpack_name_arg VARCHAR(16),
+    modpack_name_arg VARCHAR(64),
     modpack_description_arg VARCHAR(1024),
     modpack_icon_arg VARCHAR(128),
     modpack_url_arg VARCHAR(256),

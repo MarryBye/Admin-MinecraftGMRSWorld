@@ -1,6 +1,7 @@
 from src.classes.database.database_controller import DatabaseController
 
 from src.classes.datatypes.modpack import Modpack
+from src.classes.datatypes.tag import Tag
 
 db_controller = DatabaseController()
 
@@ -22,7 +23,7 @@ class ModpacksController:
             fetch_results=1
         )
         
-        return Modpack(callback_data)
+        return Modpack(**callback_data)
     
     @staticmethod
     def add_modpack(modpack_name: str, modpack_description: str, modpack_icon: str, modpack_url: str, modpack_java: int, modpack_type: int, modpack_difficulty: int):
@@ -60,8 +61,41 @@ class ModpacksController:
             query=query, 
         )
         
-        callback_data = list(map(Modpack, callback_data))
+        callback_data = [Modpack(**data) for data in callback_data]
         
         return callback_data
     
+    @staticmethod
+    def add_modpack_tag(modpack_id, tag_id):
+        
+        query = (
+            '''
+            SELECT * FROM add_modpack_tag(%s, %s)
+            '''
+        )
+        args = [modpack_id, tag_id]
+        
+        db_controller.execute_query(
+            query=query,
+            args=args
+        )
+        
+    @staticmethod
+    def get_modpack_tags(id) -> list[Tag]:
+        
+        query = (
+            '''
+            SELECT * FROM get_modpack_tags(%s)
+            '''
+        )
+        args = [id]
+        
+        callback_data = db_controller.execute_query(
+            query=query,
+            args=args,
+        )
+        
+        callback_data = [Tag(**data) for data in callback_data]
+        
+        return callback_data
     

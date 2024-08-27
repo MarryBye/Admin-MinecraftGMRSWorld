@@ -7,8 +7,33 @@ class TagsController:
     
     @staticmethod
     def add_tag(tag_name: str, tag_color: str):
-        pass
+        
+        query = (
+            '''
+            SELECT * FROM add_tag(%s, %s)
+            '''
+        )
+        args = [tag_name, tag_color]
+        
+        db_controller.execute_query(
+            query=query,
+            args=args
+        )
     
     @staticmethod
     def get_tag(id) -> Tag:
-        pass
+        
+        query = (
+            '''
+            SELECT * FROM get_tag(%s)
+            '''
+        )
+        args = [id]
+        
+        callback_data = db_controller.execute_query(
+            query=query,
+            args=args,
+            fetch_results=1
+        )
+        
+        return Tag(callback_data)

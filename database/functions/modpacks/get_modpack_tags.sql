@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS get_modpack_tags CASCADE;
 
-CREATE OR REPLACE FUNCTION get_modpack_tags(modpack_id INTEGER) 
+CREATE OR REPLACE FUNCTION get_modpack_tags(modpack_id_arg INTEGER) 
 RETURNS Table(
-    tag_id INTEGER,
+    id INTEGER,
     tag_name VARCHAR(16),
     tag_color VARCHAR(7)
 ) AS $$
@@ -15,6 +15,6 @@ BEGIN
     WHERE
     modpacks_tags.id = tags.id
     AND
-    modpacks_tags.modpack_id = modpack_id;
+    modpacks_tags.modpack_id = modpack_id_arg;
 END;
 $$ LANGUAGE plpgsql;

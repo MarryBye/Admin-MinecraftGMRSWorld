@@ -1,9 +1,9 @@
-DROP FUNCTION IF EXISTS get_modpack CASCADE;
+DROP FUNCTION IF EXISTS get_modpacks CASCADE;
 
-CREATE OR REPLACE FUNCTION get_modpack(id INTEGER) 
+CREATE OR REPLACE FUNCTION get_modpacks() 
 RETURNS Table(
-    modpack_id INTEGER,
-    modpack_name VARCHAR(16),
+    id INTEGER,
+    modpack_name VARCHAR(64),
     modpack_description VARCHAR(1024),
     modpack_icon VARCHAR(128),
     modpack_url VARCHAR(256),
@@ -13,7 +13,6 @@ RETURNS Table(
 ) AS $$
 BEGIN
     RETURN QUERY
-    SELECT * FROM data_tables.modpacks as modpacks
-    WHERE modpacks.id = id;
+    SELECT * FROM data_tables.modpacks;
 END;
 $$ LANGUAGE plpgsql;

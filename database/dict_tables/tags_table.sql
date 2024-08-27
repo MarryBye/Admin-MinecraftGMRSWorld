@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS dict_tables.tags CASCADE;
 
-$$ LANGUAGE plpgsql;
 CREATE TABLE IF NOT EXISTS dict_tables.tags (
     id SERIAL PRIMARY KEY,
     tag_name VARCHAR(16),

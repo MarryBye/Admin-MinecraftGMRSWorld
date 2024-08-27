@@ -1,6 +1,7 @@
 import psycopg2 as psql
 import json
 
+from psycopg2 import extras
 from src.classes.singleton import Singleton
 from src.classes.debug import Debug
 
@@ -28,7 +29,7 @@ class DatabaseController(metaclass=Singleton):
     def execute_query(self, query: str, args: list=None, fetch_results: int=-1):
         try:
             self.connect()
-            with self.connection, self.connection.cursor() as cursor:
+            with self.connection, self.connection.cursor(cursor_factory=extras.DictCursor) as cursor:
                 cursor.execute(query, args)
                 result = cursor.fetchall() if fetch_results == -1 else cursor.fetchone() if fetch_results == 1 else cursor.fetchmany(fetch_results)
                 self.connection.commit()
